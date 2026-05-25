@@ -3,92 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VK Video Donation Widget</title>
+<title>VK Widget — Control Panel</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
-
-  :root {
-    --bg: #0a0a0f; --accent: #07c3f2; --accent2: #ff4d6a;
-    --text: #e8eaf0; --muted: #555a70; --card: rgba(255,255,255,0.04); --border: rgba(7,195,242,0.18);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 20px 60px;position:relative;overflow-x:hidden; }
-  body::before { content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(7,195,242,0.07) 0%,transparent 70%);pointer-events:none; }
-
-  .header { text-align:center;margin-bottom:36px;position:relative;z-index:1; }
-  .header h1 { font-family:'Unbounded',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;background:linear-gradient(135deg,var(--accent) 0%,#b3eaff 60%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1; }
-  .header p { margin-top:8px;color:var(--muted);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase; }
-  .badge { display:inline-block;margin-top:12px;padding:3px 12px;border:1px solid var(--border);border-radius:99px;font-size:.7rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase; }
-
-  .container { width:100%;max-width:720px;display:flex;flex-direction:column;gap:20px;position:relative;z-index:1; }
-  .card { background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;backdrop-filter:blur(8px); }
-  .card-title { font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px; }
-  .dot-blink { width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite;flex-shrink:0; }
+  :root { --bg:#0a0a0f;--accent:#07c3f2;--accent2:#ff4d6a;--text:#e8eaf0;--muted:#555a70;--card:rgba(255,255,255,0.04);--border:rgba(7,195,242,0.18); }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 20px 60px;position:relative;overflow-x:hidden;}
+  body::before{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(7,195,242,0.07) 0%,transparent 70%);pointer-events:none;}
+  .header{text-align:center;margin-bottom:36px;position:relative;z-index:1;}
+  .header h1{font-family:'Unbounded',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;background:linear-gradient(135deg,var(--accent) 0%,#b3eaff 60%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;}
+  .header p{margin-top:8px;color:var(--muted);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;}
+  .badge{display:inline-block;margin-top:12px;padding:3px 12px;border:1px solid var(--border);border-radius:99px;font-size:.7rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;}
+  .container{width:100%;max-width:720px;display:flex;flex-direction:column;gap:20px;position:relative;z-index:1;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;backdrop-filter:blur(8px);}
+  .card-title{font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .dot-blink{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+  label{display:block;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;margin-top:14px;}
+  label:first-of-type{margin-top:0;}
+  input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(7,195,242,.1);}
+  input::placeholder{color:var(--muted);}
+  .row{display:flex;gap:12px;}.row>*{flex:1;}
+  button{background:var(--accent);color:#000;border:none;border-radius:8px;padding:11px 20px;font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .15s,transform .1s,box-shadow .15s;width:100%;margin-top:14px;}
+  button:hover{background:#29d6ff;box-shadow:0 0 20px rgba(7,195,242,.4);transform:translateY(-1px);}
+  button:active{transform:translateY(0);}
+  button.danger{background:var(--accent2);color:#fff;}
+  button.danger:hover{background:#ff6b83;box-shadow:0 0 20px rgba(255,77,106,.4);}
+  button.secondary{background:transparent;border:1px solid var(--border);color:var(--accent);margin-top:8px;}
+  button.secondary:hover{background:rgba(7,195,242,.08);box-shadow:none;}
+  .status-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(0,0,0,.3);border-radius:8px;font-size:.76rem;color:var(--muted);margin-top:12px;border:1px solid rgba(255,255,255,.06);}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s,box-shadow .3s;}
+  .dot.connected{background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.6);animation:pulse 2s ease-in-out infinite;}
+  .dot.error{background:var(--accent2);box-shadow:0 0 8px rgba(255,77,106,.6);}
+  #app-screen{display:none;}
+  .user-info{display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2);border-radius:8px;margin-bottom:14px;}
+  .user-name{font-family:'Unbounded',sans-serif;font-size:.8rem;color:#4ade80;}
+  .user-sub{font-size:.7rem;color:var(--muted);margin-top:2px;}
 
-  label { display:block;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;margin-top:14px; }
-  label:first-of-type { margin-top:0; }
-  input { width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;outline:none;transition:border-color .2s,box-shadow .2s; }
-  input:focus { border-color:var(--accent);box-shadow:0 0 0 3px rgba(7,195,242,.1); }
-  input::placeholder { color:var(--muted); }
-  .row { display:flex;gap:12px; } .row>* { flex:1; }
+  /* Now playing */
+  .now-playing{background:rgba(7,195,242,.05);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:none;}
+  .now-playing.active{display:block;}
+  .np-title{font-family:'Unbounded',sans-serif;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .np-info{display:flex;align-items:center;gap:12px;}
+  .np-badge{background:linear-gradient(135deg,var(--accent2),#ff8a9b);border-radius:6px;padding:4px 10px;font-family:'Unbounded',sans-serif;font-size:.78rem;font-weight:700;color:#fff;white-space:nowrap;flex-shrink:0;}
+  .np-donor{font-family:'Unbounded',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);}
+  .np-msg{font-size:.72rem;color:var(--muted);margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+  .np-timer{font-size:.7rem;color:var(--accent);margin-top:4px;}
+  .btn-row{display:flex;gap:8px;margin-top:12px;}
+  .btn-row button{margin-top:0;flex:1;}
 
-  button { background:var(--accent);color:#000;border:none;border-radius:8px;padding:11px 20px;font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .15s,transform .1s,box-shadow .15s;width:100%;margin-top:14px; }
-  button:hover { background:#29d6ff;box-shadow:0 0 20px rgba(7,195,242,.4);transform:translateY(-1px); }
-  button:active { transform:translateY(0); }
-  button.danger { background:var(--accent2);color:#fff; }
-  button.danger:hover { background:#ff6b83;box-shadow:0 0 20px rgba(255,77,106,.4); }
-  button.secondary { background:transparent;border:1px solid var(--border);color:var(--accent);margin-top:8px; }
-  button.secondary:hover { background:rgba(7,195,242,.08);box-shadow:none; }
+  /* OBS link box */
+  .obs-box{background:rgba(255,200,0,.05);border:1px solid rgba(255,200,0,.2);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.7;}
+  .obs-box strong{color:#ffd700;}
+  .obs-url{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--text);margin-top:8px;word-break:break-all;cursor:pointer;transition:border-color .2s;}
+  .obs-url:hover{border-color:var(--accent);}
 
-  .status-bar { display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(0,0,0,.3);border-radius:8px;font-size:.76rem;color:var(--muted);margin-top:12px;border:1px solid rgba(255,255,255,.06); }
-  .dot { width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s,box-shadow .3s; }
-  .dot.connected { background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.6);animation:pulse 2s ease-in-out infinite; }
-  .dot.error { background:var(--accent2);box-shadow:0 0 8px rgba(255,77,106,.6); }
-
-  #app-screen { display:none; }
-  #player-section { display:none; }
-  .player-overlay { position:relative;background:#000;border-radius:10px;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--border); }
-  .player-overlay iframe { width:100%;height:100%;display:block;border:none; }
-  .player-meta { margin-top:12px;display:flex;align-items:flex-start;gap:12px; }
-  .donation-badge { flex-shrink:0;background:linear-gradient(135deg,var(--accent2),#ff8a9b);border-radius:8px;padding:6px 12px;font-family:'Unbounded',sans-serif;font-size:.85rem;font-weight:700;color:#fff;white-space:nowrap; }
-  .donation-info { flex:1;min-width:0; }
-  .donation-name { font-family:'Unbounded',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-  .donation-msg { font-size:.75rem;color:var(--muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical; }
-
-  .queue-list { display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px; }
-  .queue-list::-webkit-scrollbar{width:4px} .queue-list::-webkit-scrollbar-track{background:transparent} .queue-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-  .queue-item { display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.75rem;animation:slideIn .25s ease; }
-  .queue-item.active { border-color:var(--accent);background:rgba(7,195,242,.05); }
+  .queue-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;padding-right:4px;}
+  .queue-list::-webkit-scrollbar{width:4px}.queue-list::-webkit-scrollbar-track{background:transparent}.queue-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .queue-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.75rem;animation:slideIn .25s ease;}
+  .queue-item.active{border-color:var(--accent);background:rgba(7,195,242,.05);}
   @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-  .queue-num { font-family:'Unbounded',sans-serif;font-size:.65rem;color:var(--muted);width:18px;text-align:center;flex-shrink:0; }
-  .queue-info { flex:1;min-width:0; }
-  .queue-donor { color:var(--accent);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-  .queue-amount { color:var(--accent2);font-size:.7rem;margin-left:auto;flex-shrink:0; }
-  .empty-state { text-align:center;padding:28px;color:var(--muted);font-size:.75rem; }
+  .queue-num{font-family:'Unbounded',sans-serif;font-size:.65rem;color:var(--muted);width:18px;text-align:center;flex-shrink:0;}
+  .queue-info{flex:1;min-width:0;}
+  .queue-donor{color:var(--accent);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .queue-amount{color:var(--accent2);font-size:.7rem;margin-left:auto;flex-shrink:0;}
+  .empty-state{text-align:center;padding:28px;color:var(--muted);font-size:.75rem;}
 
-  .tip-box { background:rgba(7,195,242,.05);border:1px solid rgba(7,195,242,.15);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.7; }
-  .tip-box strong { color:var(--accent); }
-  .tip-box code { background:rgba(7,195,242,.1);padding:1px 6px;border-radius:4px;color:var(--text);font-size:.72rem; }
-
-  .how-to { background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.8;margin-top:12px; }
-  .how-to strong { color:var(--text); }
-
-  .test-inputs { display:flex;gap:10px; }
-  .test-inputs input { flex:1; }
-  .test-inputs button { width:auto;margin-top:0;flex-shrink:0;padding:10px 16px; }
-
-  .user-info { display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2);border-radius:8px;margin-bottom:14px; }
-  .user-name { font-family:'Unbounded',sans-serif;font-size:.8rem;color:#4ade80; }
-  .user-sub { font-size:.7rem;color:var(--muted);margin-top:2px; }
+  .tip-box{background:rgba(7,195,242,.05);border:1px solid rgba(7,195,242,.15);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.7;}
+  .tip-box strong{color:var(--accent);}
+  .tip-box code{background:rgba(7,195,242,.1);padding:1px 6px;border-radius:4px;color:var(--text);font-size:.72rem;}
+  .how-to{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.8;margin-top:12px;}
+  .how-to strong{color:var(--text);}
+  .test-inputs{display:flex;gap:10px;}
+  .test-inputs input{flex:1;}
+  .test-inputs button{width:auto;margin-top:0;flex-shrink:0;padding:10px 16px;}
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>VK Video<br>Donation Widget</h1>
-  <p>Donation Alerts · VK Clips</p>
-  <span class="badge">Web · OBS Ready</span>
+  <p>Панель управления стримера</p>
+  <span class="badge">Control Panel</span>
 </div>
 
 <div class="container">
@@ -96,23 +93,18 @@
   <!-- Setup -->
   <div class="card" id="setup-screen">
     <div class="card-title"><span class="dot-blink"></span>Настройка</div>
-    <label>Access Token из Donation Alerts</label>
-    <input type="password" id="token-input" placeholder="Вставь Access Token...">
     <div class="how-to">
-      <strong>Как получить Access Token:</strong><br>
-      1. Нажми кнопку ниже — откроется страница авторизации DA<br>
-      2. Войди в аккаунт<br>
-      3. Скопируй токен из адресной строки (часть после <code>access_token=</code>)<br>
-      4. Вставь сюда
+      <strong>Как подключиться:</strong><br>
+      Нажми кнопку — войди через Donation Alerts — готово!
     </div>
-    <button onclick="openAuth()">🔑 Открыть авторизацию DA</button>
-    <button class="secondary" onclick="saveToken()" style="margin-top:8px;">▶ Подключиться с токеном</button>
+    <button onclick="openAuth()">🔑 Войти через Donation Alerts</button>
   </div>
 
   <!-- App -->
   <div id="app-screen">
+
     <div class="card">
-      <div class="card-title"><span class="dot-blink"></span>Подключение</div>
+      <div class="card-title"><span class="dot-blink"></span>Статус</div>
       <div class="user-info">
         <div>
           <div class="user-name" id="user-name">—</div>
@@ -133,26 +125,51 @@
         <div class="dot" id="status-dot"></div>
         <span id="status-text">Подключение...</span>
       </div>
-      <button class="secondary" onclick="logout()">Сменить токен</button>
+      <button class="secondary" onclick="logout()">Сменить аккаунт</button>
     </div>
 
-    <div class="card" id="player-section" style="margin-top:20px;">
-      <div class="card-title"><span class="dot-blink"></span>Сейчас играет</div>
-      <div class="player-overlay">
-        <iframe id="vk-iframe" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    <!-- OBS link -->
+    <div class="card">
+      <div class="card-title"><span class="dot-blink"></span>OBS Browser Source</div>
+      <div class="obs-box">
+        <strong>Добавь этот URL в OBS как Browser Source:</strong><br>
+        Размер: 1920×1080, фон прозрачный
+        <div class="obs-url" id="obs-url" onclick="copyObsUrl()" title="Нажми чтобы скопировать"></div>
+        <div style="margin-top:6px;font-size:.7rem;">👆 Нажми чтобы скопировать</div>
       </div>
-      <div class="player-meta" id="player-meta"></div>
-      <button class="danger" onclick="skipCurrent()" style="margin-top:14px;">⏭ Пропустить</button>
     </div>
 
-    <div class="card" style="margin-top:20px;">
+    <!-- Now playing -->
+    <div class="card">
+      <div class="card-title"><span class="dot-blink"></span>Сейчас играет</div>
+      <div class="now-playing" id="now-playing">
+        <div class="np-title">Текущий клип</div>
+        <div class="np-info">
+          <div class="np-badge" id="np-amount">—</div>
+          <div style="flex:1;min-width:0;">
+            <div class="np-donor" id="np-donor">—</div>
+            <div class="np-msg" id="np-msg">—</div>
+            <div class="np-timer" id="np-timer">—</div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="danger" onclick="skipCurrent()">⏭ Пропустить</button>
+          <button class="secondary" onclick="clearQueue()" style="margin-top:0;">🗑 Очистить всё</button>
+        </div>
+      </div>
+      <div class="empty-state" id="now-playing-empty">Ничего не играет</div>
+    </div>
+
+    <!-- Queue -->
+    <div class="card">
       <div class="card-title"><span class="dot-blink"></span>Очередь клипов</div>
       <div class="queue-list" id="queue-list">
         <div class="empty-state">Очередь пуста — жди донатов с VK-ссылками</div>
       </div>
     </div>
 
-    <div class="card" style="margin-top:20px;">
+    <!-- Test -->
+    <div class="card">
       <div class="card-title"><span class="dot-blink"></span>Тест</div>
       <label>Ссылка VK Видео</label>
       <div class="test-inputs">
@@ -166,6 +183,7 @@
         <button onclick="simulateDonation()">+ Донат</button>
       </div>
     </div>
+
   </div>
 
   <div class="tip-box">
@@ -176,10 +194,11 @@
 </div>
 
 <script>
-// PROXY_URL будет заменён на реальный адрес после деплоя
-const PROXY_URL = '/api/proxy';
-const CLIENT_ID = '19121';
-const LS_TOKEN  = 'da_access_token';
+const PROXY_URL  = '/api/proxy';
+const CLIENT_ID  = '19121';
+const LS_TOKEN   = 'da_access_token';
+const LS_CURRENT = 'vk_player_current';
+const LS_QUEUE   = 'vk_player_queue';
 
 let accessToken = null;
 let ws          = null;
@@ -187,47 +206,36 @@ let daUserId    = null;
 let queue       = [];
 let isPlaying   = false;
 let playTimer   = null;
+let currentItem = null;
+let timerInterval = null;
+let timeLeft    = 0;
 
 // ── Boot ──────────────────────────────────────────────
 (function init() {
-  // Catch implicit flow token from URL hash
   const hash = window.location.hash;
   if (hash) {
     const p = new URLSearchParams(hash.slice(1));
     const t = p.get('access_token');
-    if (t) {
-      accessToken = t;
-      localStorage.setItem(LS_TOKEN, t);
-      history.replaceState(null, '', window.location.pathname);
-    }
+    if (t) { accessToken = t; localStorage.setItem(LS_TOKEN, t); history.replaceState(null,'',window.location.pathname); }
   }
   if (!accessToken) accessToken = localStorage.getItem(LS_TOKEN);
+
+  // Set OBS player URL
+  const playerUrl = window.location.origin + '/player.html';
+  document.getElementById('obs-url').textContent = playerUrl;
 
   if (accessToken) showApp();
 })();
 
 function openAuth() {
   const redirect = window.location.origin + window.location.pathname;
-  const scope    = 'oauth-donation-index oauth-user-show oauth-donation-subscribe';
-  const url = `https://www.donationalerts.com/oauth/authorize`
-    + `?client_id=${CLIENT_ID}`
-    + `&redirect_uri=${encodeURIComponent(redirect)}`
-    + `&response_type=token`
-    + `&scope=${encodeURIComponent(scope)}`;
-  window.location.href = url;
-}
-
-function saveToken() {
-  const val = document.getElementById('token-input').value.trim();
-  if (!val) { alert('Введи токен'); return; }
-  accessToken = val;
-  localStorage.setItem(LS_TOKEN, val);
-  showApp();
+  const scope = 'oauth-donation-index oauth-user-show oauth-donation-subscribe';
+  window.location.href = `https://www.donationalerts.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(redirect)}&response_type=token&scope=${encodeURIComponent(scope)}`;
 }
 
 function showApp() {
-  document.getElementById('setup-screen').style.display  = 'none';
-  document.getElementById('app-screen').style.display    = 'block';
+  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display = 'block';
   loadUser();
 }
 
@@ -236,33 +244,37 @@ function logout() {
   accessToken = null;
   if (ws) { ws.close(); ws = null; }
   document.getElementById('setup-screen').style.display = 'block';
-  document.getElementById('app-screen').style.display   = 'none';
+  document.getElementById('app-screen').style.display = 'none';
 }
 
-// ── Load user via proxy ───────────────────────────────
+function copyObsUrl() {
+  const url = document.getElementById('obs-url').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    document.getElementById('obs-url').textContent = '✓ Скопировано!';
+    setTimeout(() => { document.getElementById('obs-url').textContent = url; }, 2000);
+  });
+}
+
+// ── Load user ─────────────────────────────────────────
 async function loadUser() {
-  setStatus('connecting', 'Получение данных пользователя...');
+  setStatus('connecting', 'Получение данных...');
   try {
     const r = await fetch(`${PROXY_URL}?token=${accessToken}&path=user/oauth`);
     const d = await r.json();
     if (d.data) {
       daUserId = d.data.id;
       document.getElementById('user-name').textContent = d.data.name || d.data.username || 'ID: ' + daUserId;
-      const socketToken = d.data.socket_connection_token;
-      connectSocket(socketToken);
+      connectSocket(d.data.socket_connection_token);
     } else {
-      setStatus('error', 'Ошибка авторизации — попробуй войти снова');
+      setStatus('error', 'Ошибка — войди снова');
     }
-  } catch(e) {
-    setStatus('error', 'Ошибка: ' + e.message);
-  }
+  } catch(e) { setStatus('error', e.message); }
 }
 
 // ── WebSocket ─────────────────────────────────────────
 function connectSocket(socketToken) {
-  setStatus('connecting', 'Подключение к сокету...');
+  setStatus('connecting', 'Подключение...');
   try { if (ws) ws.close(); } catch(e) {}
-
   ws = new WebSocket('wss://centrifugo.donationalerts.com/connection/websocket');
 
   ws.onopen = () => {
@@ -272,11 +284,8 @@ function connectSocket(socketToken) {
   ws.onmessage = async (e) => {
     try {
       const msg = JSON.parse(e.data);
-
-      // Connected — get subscription token and subscribe
       if (msg.id === 1 && msg.result) {
         const clientId = msg.result.client;
-        // Get channel subscription token via proxy
         const r = await fetch(`${PROXY_URL}?token=${accessToken}&path=centrifuge/subscribe`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -285,27 +294,17 @@ function connectSocket(socketToken) {
         const d = await r.json();
         const ch = (d.data?.channels || d.channels)?.[0];
         if (ch) {
-          ws.send(JSON.stringify({
-            params: { channel: ch.channel, token: ch.token },
-            method: 1,
-            id: 2
-          }));
+          ws.send(JSON.stringify({ params: { channel: ch.channel, token: ch.token }, method: 1, id: 2 }));
           setStatus('connected', 'Подключено · ждём донатов');
         }
       }
-
-      // Donation event
       const pub = msg.push?.pub?.data;
       if (pub && pub.amount !== undefined) handleDonation(pub);
-
     } catch(err) { console.log('[WS] err', err); }
   };
 
   ws.onerror = () => setStatus('error', 'Ошибка соединения');
-  ws.onclose = (e) => {
-    setStatus('idle', 'Переподключение...');
-    setTimeout(() => { if (accessToken) loadUser(); }, 5000);
-  };
+  ws.onclose = () => { setStatus('idle', 'Переподключение...'); setTimeout(() => { if (accessToken) loadUser(); }, 5000); };
 }
 
 // ── Donation handler ──────────────────────────────────
@@ -322,44 +321,69 @@ function handleDonation(data) {
 
 // ── VK parser ─────────────────────────────────────────
 function parseVkVideo(text) {
-  const pats = [
-    /vk\.com\/video(-?\d+)_(\d+)/i,
-    /vk\.com\/clip(-?\d+)_(\d+)/i,
-    /[?&]z=video(-?\d+)_(\d+)/i,
-    /video(-?\d+)_(\d+)/i,
-  ];
-  for (const re of pats) {
-    const m = text.match(re);
-    if (m) return { oid: m[1], id: m[2] };
-  }
+  const pats = [/vk\.com\/video(-?\d+)_(\d+)/i,/vk\.com\/clip(-?\d+)_(\d+)/i,/[?&]z=video(-?\d+)_(\d+)/i,/video(-?\d+)_(\d+)/i];
+  for (const re of pats) { const m = text.match(re); if (m) return { oid: m[1], id: m[2] }; }
   return null;
 }
-function buildEmbed(oid, id) { return `https://vk.com/video_ext.php?oid=${oid}&id=${id}&hd=2&autoplay=1`; }
 
-// ── Queue & player ────────────────────────────────────
-function enqueue(item) { queue.push(item); renderQueue(); if (!isPlaying) playNext(); }
+// ── Queue & Player ────────────────────────────────────
+function enqueue(item) { queue.push(item); saveQueue(); renderQueue(); if (!isPlaying) playNext(); }
+
 function playNext() {
-  if (!queue.length) { isPlaying = false; stopPlayer(); return; }
+  if (!queue.length) { isPlaying = false; currentItem = null; stopPlayer(); return; }
   isPlaying = true;
-  const item = queue.shift(); renderQueue(); startPlayer(item);
+  currentItem = queue.shift();
+  saveQueue();
+  renderQueue();
+  startPlayer(currentItem);
 }
-function skipCurrent() { clearTimeout(playTimer); playNext(); }
+
+function skipCurrent() { clearTimeout(playTimer); clearInterval(timerInterval); playNext(); }
+
+function clearQueue() {
+  queue = [];
+  clearTimeout(playTimer);
+  clearInterval(timerInterval);
+  isPlaying = false;
+  currentItem = null;
+  stopPlayer();
+  saveQueue();
+  renderQueue();
+}
+
 function startPlayer(item) {
   const dur = (parseInt(document.getElementById('clip-duration').value) || 60) * 1000;
-  document.getElementById('vk-iframe').src = buildEmbed(item.oid, item.id);
-  document.getElementById('player-section').style.display = 'block';
-  document.getElementById('player-meta').innerHTML = `
-    <div class="donation-badge">${item.amount} ${item.currency}</div>
-    <div class="donation-info">
-      <div class="donation-name">${esc(item.donor)}</div>
-      <div class="donation-msg">${esc(item.message)}</div>
-    </div>`;
+  timeLeft = Math.floor(dur / 1000);
+
+  // Write to localStorage for player.html
+  localStorage.setItem(LS_CURRENT, JSON.stringify(item));
+
+  // Update now playing UI
+  document.getElementById('now-playing').classList.add('active');
+  document.getElementById('now-playing-empty').style.display = 'none';
+  document.getElementById('np-amount').textContent = item.amount + ' ' + item.currency;
+  document.getElementById('np-donor').textContent = item.donor;
+  document.getElementById('np-msg').textContent = item.message;
+
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById('np-timer').textContent = `⏱ Осталось: ${timeLeft} сек`;
+    if (timeLeft <= 0) clearInterval(timerInterval);
+  }, 1000);
+
   playTimer = setTimeout(playNext, dur);
 }
+
 function stopPlayer() {
-  document.getElementById('vk-iframe').src = '';
-  document.getElementById('player-section').style.display = 'none';
+  localStorage.removeItem(LS_CURRENT);
+  document.getElementById('now-playing').classList.remove('active');
+  document.getElementById('now-playing-empty').style.display = 'block';
+  clearInterval(timerInterval);
 }
+
+function saveQueue() { localStorage.setItem(LS_QUEUE, JSON.stringify(queue)); }
+
 function renderQueue() {
   const el = document.getElementById('queue-list');
   if (!queue.length) { el.innerHTML = '<div class="empty-state">Очередь пуста</div>'; return; }
@@ -374,7 +398,6 @@ function renderQueue() {
     </div>`).join('');
 }
 
-// ── Helpers ───────────────────────────────────────────
 function setStatus(s, text) {
   const dot = document.getElementById('status-dot');
   dot.className = 'dot';
@@ -382,6 +405,7 @@ function setStatus(s, text) {
   if (s === 'error')     dot.classList.add('error');
   document.getElementById('status-text').textContent = text;
 }
+
 function testVideo() {
   const u = document.getElementById('test-url').value.trim();
   if (!u) return;
@@ -389,11 +413,13 @@ function testVideo() {
   if (!p) { alert('Не удалось распознать VK-ссылку'); return; }
   enqueue({ donor: 'Тест', amount: 999, message: u, currency: '₽', ...p });
 }
+
 function simulateDonation() {
   const u = document.getElementById('test-url').value.trim();
   if (!u) { alert('Введи VK-ссылку выше'); return; }
   handleDonation({ username: document.getElementById('test-donor').value || 'TestUser', amount: parseFloat(document.getElementById('test-amount').value) || 200, message: u, currency: '₽' });
 }
+
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 </script>
 </body>
