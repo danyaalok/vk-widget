@@ -471,63 +471,58 @@ function loadUser() {
 }
 
 // ── Centrifugo WebSocket ──────────────────────────────
-async function connectSocket() {
+function connectSocket() {
   setStatus('connecting', 'Подключение...');
-
-  // Need socket token from DA API
-  try {
-    const r = await fetch('https://www.donationalerts.com/api/v1/centrifuge/subscribe', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ channels: [`$alerts:donation_${daUserId}`] })
-    });
-    const d = await r.json();
-    const channels = d.data?.channels;
-    if (!channels || !channels.length) {
-      // Fallback: connect without channel token
-      openWS(null, null);
-      return;
-    }
-    const ch = channels[0];
-    openWS(ch.channel, ch.token);
-  } catch(e) {
-    openWS(null, null);
-  }
+  openWS();
 }
 
-function openWS(channel, channelToken) {
+function openWS() {
+  try { if (ws) ws.close(); } catch(e) {}
+
   ws = new WebSocket('wss://centrifugo.donationalerts.com/connection/websocket');
 
   ws.onopen = () => {
-    ws.send(JSON.stringify({ id: 1, connect: { token: accessToken } }));
+    console.log('[WS] open, sending connect');
+    ws.send(JSON.stringify({
+      params: { token: accessToken },
+      id: 1
+    }));
   };
 
   ws.onmessage = (e) => {
     try {
       const msg = JSON.parse(e.data);
+      console.log('[WS] message:', JSON.stringify(msg).slice(0, 200));
 
-      if (msg.id === 1 && msg.connect) {
+      // Connected - subscribe to donations channel
+      if (msg.id === 1 && msg.result !== undefined) {
         setStatus('connected', 'Подключено · ждём донатов');
-        const ch = channel || `$alerts:donation_${daUserId}`;
-        const subMsg = { id: 2, subscribe: { channel: ch } };
-        if (channelToken) subMsg.subscribe.token = channelToken;
-        ws.send(JSON.stringify(subMsg));
+        ws.send(JSON.stringify({
+          method: 1,
+          params: { channel: `$alerts:donation_${daUserId}` },
+          id: 2
+        }));
       }
 
-      // New donation
-      if (msg.push && msg.push.pub && msg.push.pub.data) {
-        handleDonation(msg.push.pub.data);
+      // Publication (donation event)
+      const pub = msg.result?.data?.data
+                || msg.push?.pub?.data
+                || msg.result?.data;
+      if (pub && pub.amount !== undefined) {
+        handleDonation(pub);
       }
-    } catch(err) {}
+    } catch(err) { console.log('[WS] parse error', err); }
   };
 
-  ws.onerror = () => setStatus('error', 'Ошибка соединения');
-  ws.onclose = () => {
+  ws.onerror = (e) => {
+    console.log('[WS] error', e);
+    setStatus('error', 'Ошибка соединения');
+  };
+
+  ws.onclose = (e) => {
+    console.log('[WS] closed', e.code, e.reason);
     setStatus('idle', 'Соединение закрыто · переподключение...');
-    setTimeout(() => { if (accessToken) connectSocket(); }, 5000);
+    setTimeout(() => { if (accessToken) openWS(); }, 5000);
   };
 }
 
