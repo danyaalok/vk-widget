@@ -312,6 +312,12 @@ function openAuth() {
 function showApp() {
   document.getElementById('setup-in-control').style.display = 'none';
   document.getElementById('app-in-control').style.display   = 'block';
+  // Restore saved min amount
+  const saved = localStorage.getItem('min_amount');
+  if (saved) document.getElementById('min-amount').value = saved;
+  document.getElementById('min-amount').addEventListener('input', (e) => {
+    localStorage.setItem('min_amount', e.target.value);
+  });
 }
 
 function logout() {
