@@ -121,21 +121,24 @@
       <div class="card">
         <div class="card-title"><span class="dot-blink"></span>Статус</div>
         <div class="user-info"><div><div class="user-name" id="user-name">—</div><div class="user-sub">Donation Alerts подключён ✓</div></div></div>
-        <div class="row">
-          <div><label>Мин. сумма (руб)</label><input type="number" id="min-amount" value="100" min="0"></div>
-          <div><label>Длительность (сек)</label><input type="number" id="clip-duration" value="60" min="10" max="300"></div>
-        </div>
+        <label>Мин. сумма (руб)</label>
+        <input type="number" id="min-amount" value="100" min="0">
         <div class="status-bar"><div class="dot" id="status-dot"></div><span id="status-text">Подключение...</span></div>
         <button class="secondary" onclick="logout()">Сменить аккаунт</button>
       </div>
 
+      <div class="card" id="mini-player-card" style="display:none;">
+        <div class="card-title"><span class="dot-blink"></span>Мини-плеер</div>
+        <div style="position:relative;border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:#000;border:1px solid var(--border);">
+          <iframe id="mini-iframe" allowfullscreen allow="autoplay; encrypted-media" style="width:100%;height:100%;border:none;display:block;"></iframe>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-title"><span class="dot-blink"></span>OBS Browser Source</div>
-        <div class="obs-box">
-          <strong>Добавь этот URL в OBS (1920×1080, Allow transparency):</strong>
-          <div class="obs-url" id="obs-url-text" onclick="copyObsUrl()">—</div>
-          <div style="font-size:.68rem;">👆 Нажми чтобы скопировать</div>
-        </div>
+        <div style="font-size:.72rem;color:var(--muted);margin-bottom:10px;">Добавь виджет в OBS как Browser Source (1920×1080, Allow transparency)</div>
+        <button id="copy-obs-btn" onclick="copyObsUrl()" style="margin-top:0;">📋 Скопировать URL для OBS</button>
+        <div id="obs-url-text" style="display:none;">—</div>
       </div>
 
       <div class="card">
@@ -389,7 +392,7 @@ function playNext() {
   isPlaying = true; currentItem = queue.shift(); saveState(); renderQueue(); startPlayer(currentItem);
 }
 
-function skipCurrent() { clearTimeout(playTimer); clearInterval(timerInterval); playNext(); }
+function skipCurrent() { clearInterval(timerInterval); playNext(); }
 
 function clearAll() {
   queue = []; clearTimeout(playTimer); clearInterval(timerInterval);
@@ -397,23 +400,20 @@ function clearAll() {
 }
 
 function startPlayer(item) {
-  const dur = (parseInt(document.getElementById('clip-duration')?.value || 60)) * 1000;
-  timeLeft = Math.floor(dur / 1000);
-
   if (isControlMode) {
     document.getElementById('now-playing').classList.add('active');
     document.getElementById('now-playing-empty').style.display = 'none';
     document.getElementById('np-amount').textContent = item.amount + ' ' + item.currency;
     document.getElementById('np-donor').textContent  = item.donor;
     document.getElementById('np-msg').textContent    = item.message;
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-      timeLeft--;
-      document.getElementById('np-timer').textContent = `⏱ Осталось: ${timeLeft} сек`;
-      if (timeLeft <= 0) clearInterval(timerInterval);
-    }, 1000);
+    document.getElementById('np-timer').textContent  = '';
+    // Show mini player
+    const miniCard = document.getElementById('mini-player-card');
+    const miniIframe = document.getElementById('mini-iframe');
+    miniCard.style.display = 'block';
+    miniIframe.src = `https://vk.com/video_ext.php?oid=${item.oid}&id=${item.id}&hd=2&autoplay=1`;
   }
-  playTimer = setTimeout(playNext, dur);
+  // No auto-skip — streamer skips manually
 }
 
 function stopPlayer() {
@@ -421,6 +421,8 @@ function stopPlayer() {
     document.getElementById('now-playing').classList.remove('active');
     document.getElementById('now-playing-empty').style.display = 'block';
     clearInterval(timerInterval);
+    document.getElementById('mini-player-card').style.display = 'none';
+    document.getElementById('mini-iframe').src = '';
   }
 }
 
