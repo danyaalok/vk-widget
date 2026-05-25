@@ -283,7 +283,7 @@ function connectSocket(socketToken) {
           body: JSON.stringify({ client: clientId, channels: [`$alerts:donation_${daUserId}`] })
         });
         const d = await r.json();
-        const ch = d.data?.channels?.[0];
+        const ch = (d.data?.channels || d.channels)?.[0];
         if (ch) {
           ws.send(JSON.stringify({
             params: { channel: ch.channel, token: ch.token },
