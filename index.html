@@ -447,27 +447,27 @@ function logout() {
 }
 
 // ── User info ─────────────────────────────────────────
-async function loadUser() {
-  const cached = localStorage.getItem(LS_USER);
-  if (cached) {
-    const u = JSON.parse(cached);
-    daUserId = u.id;
-    document.getElementById('user-name').textContent = u.name;
-    return;
-  }
+function loadUser() {
   try {
-    const r = await fetch('https://www.donationalerts.com/api/v1/user/oauth', {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    });
-    if (r.status === 401) { logout(); return; }
-    const d = await r.json();
-    if (d.data) {
-      daUserId = d.data.id;
-      const name = d.data.name || d.data.username || '—';
-      document.getElementById('user-name').textContent = name;
-      localStorage.setItem(LS_USER, JSON.stringify({ id: daUserId, name }));
+    // Decode JWT payload (base64url)
+    const parts = accessToken.split('.');
+    if (parts.length < 2) throw new Error('bad token');
+    const payload = JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
+    daUserId = payload.sub || payload.user_id || payload.id || null;
+    const name = payload.name || payload.username || ('ID: ' + daUserId) || '—';
+    document.getElementById('user-name').textContent = name;
+    localStorage.setItem(LS_USER, JSON.stringify({ id: daUserId, name }));
+  } catch(e) {
+    // Fallback: try cached
+    const cached = localStorage.getItem(LS_USER);
+    if (cached) {
+      const u = JSON.parse(cached);
+      daUserId = u.id;
+      document.getElementById('user-name').textContent = u.name;
+    } else {
+      document.getElementById('user-name').textContent = 'Подключён';
     }
-  } catch(e) {}
+  }
 }
 
 // ── Centrifugo WebSocket ──────────────────────────────
