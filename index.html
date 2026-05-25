@@ -42,200 +42,95 @@
     pointer-events: none;
   }
 
-  .header {
-    text-align: center;
-    margin-bottom: 36px;
-    position: relative;
-    z-index: 1;
-  }
-
+  .header { text-align: center; margin-bottom: 36px; position: relative; z-index: 1; }
   .header h1 {
     font-family: 'Unbounded', sans-serif;
     font-size: clamp(1.4rem, 4vw, 2.2rem);
     font-weight: 900;
     background: linear-gradient(135deg, var(--accent) 0%, #b3eaff 60%, var(--accent2) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     line-height: 1.1;
   }
-
   .header p { margin-top: 8px; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; }
-
-  .badge {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 3px 12px;
-    border: 1px solid var(--border);
-    border-radius: 99px;
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+  .badge { display: inline-block; margin-top: 12px; padding: 3px 12px; border: 1px solid var(--border); border-radius: 99px; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
 
   .container { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
 
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px 24px;
-    backdrop-filter: blur(8px);
-  }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; backdrop-filter: blur(8px); }
 
   .card-title {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-family: 'Unbounded', sans-serif; font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
   }
+  .dot-blink { width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite;flex-shrink:0;display:inline-block; }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-  .dot-blink {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-    animation: pulse 2s ease-in-out infinite;
-    flex-shrink: 0;
-    display: inline-block;
-  }
-
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
-
-  label { display: block; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 7px; margin-top: 14px; }
+  label { display:block;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;margin-top:14px; }
   label:first-of-type { margin-top: 0; }
 
   input {
-    width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    padding: 10px 14px;
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    outline: none;
-    transition: border-color .2s, box-shadow .2s;
+    width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+    border-radius:8px;padding:10px 14px;color:var(--text);font-family:'JetBrains Mono',monospace;
+    font-size:.82rem;outline:none;transition:border-color .2s,box-shadow .2s;
   }
-  input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(7,195,242,.1); }
-  input::placeholder { color: var(--muted); }
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(7,195,242,.1);}
+  input::placeholder{color:var(--muted);}
 
-  .row { display: flex; gap: 12px; }
-  .row > * { flex: 1; }
+  .row{display:flex;gap:12px;} .row>*{flex:1;}
 
   button {
-    background: var(--accent);
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    padding: 11px 20px;
-    font-family: 'Unbounded', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background .15s, transform .1s, box-shadow .15s;
-    width: 100%;
-    margin-top: 14px;
+    background:var(--accent);color:#000;border:none;border-radius:8px;padding:11px 20px;
+    font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;cursor:pointer;transition:background .15s,transform .1s,box-shadow .15s;
+    width:100%;margin-top:14px;
   }
-  button:hover { background: #29d6ff; box-shadow: 0 0 20px rgba(7,195,242,.4); transform: translateY(-1px); }
-  button:active { transform: translateY(0); }
-  button.danger { background: var(--accent2); color: #fff; }
-  button.danger:hover { background: #ff6b83; box-shadow: 0 0 20px rgba(255,77,106,.4); }
+  button:hover{background:#29d6ff;box-shadow:0 0 20px rgba(7,195,242,.4);transform:translateY(-1px);}
+  button:active{transform:translateY(0);}
+  button.danger{background:var(--accent2);color:#fff;}
+  button.danger:hover{background:#ff6b83;box-shadow:0 0 20px rgba(255,77,106,.4);}
+  button.secondary{background:transparent;border:1px solid var(--border);color:var(--accent);margin-top:8px;}
+  button.secondary:hover{background:rgba(7,195,242,.08);box-shadow:none;}
 
-  /* First-run setup */
-  #setup-screen { text-align: center; padding: 32px 24px; }
-  .setup-title { font-family: 'Unbounded', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-  .setup-desc { color: var(--muted); font-size: 0.78rem; margin-bottom: 24px; line-height: 1.7; }
+  .status-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(0,0,0,.3);border-radius:8px;font-size:.76rem;color:var(--muted);margin-top:12px;border:1px solid rgba(255,255,255,.06);}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s,box-shadow .3s;}
+  .dot.connected{background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.6);animation:pulse 2s ease-in-out infinite;}
+  .dot.error{background:var(--accent2);box-shadow:0 0 8px rgba(255,77,106,.6);}
 
-  .client-id-row { display: flex; gap: 10px; margin-bottom: 0; }
-  .client-id-row input { flex: 1; }
-  .client-id-row button { width: auto; margin-top: 0; padding: 10px 18px; flex-shrink: 0; }
+  #setup-screen{}
+  #app-screen{display:none;}
 
-  /* Auth button */
-  .btn-da {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: #f5821f;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 14px 28px;
-    font-family: 'Unbounded', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 16px;
-    transition: background .15s, box-shadow .15s, transform .1s;
-  }
-  .btn-da:hover { background: #ff9a3c; box-shadow: 0 0 24px rgba(245,130,31,.45); transform: translateY(-1px); }
-  .btn-da:active { transform: translateY(0); }
+  #player-section{display:none;}
+  .player-overlay{position:relative;background:#000;border-radius:10px;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--border);}
+  .player-overlay iframe{width:100%;height:100%;display:block;border:none;}
+  .player-meta{margin-top:12px;display:flex;align-items:flex-start;gap:12px;}
+  .donation-badge{flex-shrink:0;background:linear-gradient(135deg,var(--accent2),#ff8a9b);border-radius:8px;padding:6px 12px;font-family:'Unbounded',sans-serif;font-size:.85rem;font-weight:700;color:#fff;white-space:nowrap;}
+  .donation-info{flex:1;min-width:0;}
+  .donation-name{font-family:'Unbounded',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .donation-msg{font-size:.75rem;color:var(--muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 
-  /* Auth screen */
-  #auth-screen { display: none; text-align: center; padding: 40px 24px; }
-  .auth-icon { font-size: 3rem; margin-bottom: 16px; display: block; }
-  .auth-title { font-family: 'Unbounded', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-  .auth-desc { color: var(--muted); font-size: 0.78rem; margin-bottom: 0; line-height: 1.6; }
-
-  /* Main app */
-  #app-screen { display: none; }
-
-  .status-bar {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 14px;
-    background: rgba(0,0,0,.3);
-    border-radius: 8px;
-    font-size: 0.76rem; color: var(--muted);
-    margin-top: 12px;
-    border: 1px solid rgba(255,255,255,.06);
-  }
-  .dot { width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s,box-shadow .3s; }
-  .dot.connected { background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.6);animation:pulse 2s ease-in-out infinite; }
-  .dot.error { background:var(--accent2);box-shadow:0 0 8px rgba(255,77,106,.6); }
-
-  .user-info { display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2);border-radius:8px;margin-bottom:14px; }
-  .user-name { font-family:'Unbounded',sans-serif;font-size:.8rem;color:#4ade80; }
-  .user-sub { font-size:.7rem;color:var(--muted);margin-top:2px; }
-
-  #player-section { display: none; }
-  .player-overlay { position:relative;background:#000;border-radius:10px;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--border); }
-  .player-overlay iframe { width:100%;height:100%;display:block;border:none; }
-  .player-meta { margin-top:12px;display:flex;align-items:flex-start;gap:12px; }
-  .donation-badge { flex-shrink:0;background:linear-gradient(135deg,var(--accent2),#ff8a9b);border-radius:8px;padding:6px 12px;font-family:'Unbounded',sans-serif;font-size:.85rem;font-weight:700;color:#fff;white-space:nowrap; }
-  .donation-info { flex:1;min-width:0; }
-  .donation-name { font-family:'Unbounded',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-  .donation-msg { font-size:.75rem;color:var(--muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical; }
-
-  .queue-list { display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px; }
+  .queue-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px;}
   .queue-list::-webkit-scrollbar{width:4px} .queue-list::-webkit-scrollbar-track{background:transparent} .queue-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-  .queue-item { display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.75rem;animation:slideIn .25s ease; }
-  .queue-item.active { border-color:var(--accent);background:rgba(7,195,242,.05); }
+  .queue-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.75rem;animation:slideIn .25s ease;}
+  .queue-item.active{border-color:var(--accent);background:rgba(7,195,242,.05);}
   @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-  .queue-num { font-family:'Unbounded',sans-serif;font-size:.65rem;color:var(--muted);width:18px;text-align:center;flex-shrink:0; }
-  .queue-info { flex:1;min-width:0; }
-  .queue-donor { color:var(--accent);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-  .queue-amount { color:var(--accent2);font-size:.7rem;margin-left:auto;flex-shrink:0; }
-  .empty-state { text-align:center;padding:28px;color:var(--muted);font-size:.75rem; }
+  .queue-num{font-family:'Unbounded',sans-serif;font-size:.65rem;color:var(--muted);width:18px;text-align:center;flex-shrink:0;}
+  .queue-info{flex:1;min-width:0;}
+  .queue-donor{color:var(--accent);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .queue-amount{color:var(--accent2);font-size:.7rem;margin-left:auto;flex-shrink:0;}
+  .empty-state{text-align:center;padding:28px;color:var(--muted);font-size:.75rem;}
 
-  .tip-box { background:rgba(7,195,242,.05);border:1px solid rgba(7,195,242,.15);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.7; }
-  .tip-box strong { color:var(--accent); }
-  .tip-box code { background:rgba(7,195,242,.1);padding:1px 6px;border-radius:4px;color:var(--text);font-size:.72rem; }
+  .tip-box{background:rgba(7,195,242,.05);border:1px solid rgba(7,195,242,.15);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.7;}
+  .tip-box strong{color:var(--accent);}
+  .tip-box code{background:rgba(7,195,242,.1);padding:1px 6px;border-radius:4px;color:var(--text);font-size:.72rem;}
 
-  .test-inputs { display:flex;gap:10px; }
-  .test-inputs input { flex:1; }
-  .test-inputs button { width:auto;margin-top:0;flex-shrink:0;padding:10px 16px; }
+  .test-inputs{display:flex;gap:10px;}
+  .test-inputs input{flex:1;}
+  .test-inputs button{width:auto;margin-top:0;flex-shrink:0;padding:10px 16px;}
+
+  .how-to{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.8;margin-top:12px;}
+  .how-to strong{color:var(--text);}
+  .how-to a{color:var(--accent);text-decoration:none;}
 </style>
 </head>
 <body>
@@ -248,50 +143,26 @@
 
 <div class="container">
 
-  <!-- Step 1: Enter Client ID (first run only) -->
+  <!-- Setup -->
   <div class="card" id="setup-screen">
-    <div class="setup-title">🎬 Настройка виджета</div>
-    <div class="setup-desc">
-      Введи свой <strong style="color:var(--accent)">Client ID</strong> из Donation Alerts.<br>
-      Он сохранится в браузере — больше вводить не нужно.
+    <div class="card-title"><span class="dot-blink"></span>Настройка</div>
+    <label>Widget Token из Donation Alerts</label>
+    <input type="text" id="token-input" placeholder="Вставь сюда свой Widget Token...">
+
+    <div class="how-to">
+      <strong>Где найти Widget Token:</strong><br>
+      DA → Виджеты → любой виджет (например Оповещения) → Копировать ссылку<br>
+      В ссылке найди параметр <code>?token=XXXXX</code> — это и есть твой токен
     </div>
-    <label>Client ID приложения DA</label>
-    <div class="client-id-row">
-      <input type="text" id="client-id-input" placeholder="например: 19121">
-      <button onclick="saveClientId()">Сохранить</button>
-    </div>
-    <div style="margin-top:10px;font-size:0.72rem;color:var(--muted);">
-      Найти: Donation Alerts → Настройки аккаунта → OAuth приложения API → твоё приложение
-    </div>
+
+    <button onclick="saveToken()">▶ Подключиться</button>
   </div>
 
-  <!-- Step 2: Auth -->
-  <div class="card" id="auth-screen">
-    <span class="auth-icon">🔑</span>
-    <div class="auth-title">Войди через Donation Alerts</div>
-    <div class="auth-desc">
-      Нажми кнопку — откроется страница авторизации DA.<br>
-      После входа виджет подключится автоматически.
-    </div>
-    <button class="btn-da" onclick="startAuth()">
-      Войти через Donation Alerts
-    </button>
-    <button style="background:transparent;border:1px solid var(--border);color:var(--muted);margin-top:8px;font-size:0.65rem;" onclick="resetClientId()">
-      Изменить Client ID
-    </button>
-  </div>
-
-  <!-- Main app -->
+  <!-- App -->
   <div id="app-screen">
 
     <div class="card">
       <div class="card-title"><span class="dot-blink"></span>Подключение</div>
-      <div class="user-info">
-        <div>
-          <div class="user-name" id="user-name">—</div>
-          <div class="user-sub">Donation Alerts подключён ✓</div>
-        </div>
-      </div>
       <div class="row">
         <div>
           <label>Мин. сумма (руб)</label>
@@ -306,7 +177,7 @@
         <div class="dot" id="status-dot"></div>
         <span id="status-text">Подключение...</span>
       </div>
-      <button class="danger" onclick="logout()" style="margin-top:12px;">Выйти из аккаунта</button>
+      <button class="secondary" onclick="logout()">Сменить токен</button>
     </div>
 
     <!-- Now Playing -->
@@ -353,165 +224,111 @@
 </div>
 
 <script>
-// ── Constants ─────────────────────────────────────────
-const LS_TOKEN   = 'da_token';
-const LS_CLIENT  = 'da_client_id';
-const LS_USER    = 'da_user';
+const LS_TOKEN = 'da_widget_token';
 
-// ── State ─────────────────────────────────────────────
-let accessToken = null;
-let clientId    = null;
-let ws          = null;
-let queue       = [];
-let isPlaying   = false;
-let playTimer   = null;
-let daUserId    = null;
+let widgetToken = null;
+let ws = null;
+let queue = [];
+let isPlaying = false;
+let playTimer = null;
+let socketToken = null;
+let userId = null;
 
 // ── Boot ──────────────────────────────────────────────
 (function init() {
-  clientId    = localStorage.getItem(LS_CLIENT);
-  accessToken = localStorage.getItem(LS_TOKEN);
-
-  // Check if we just got a token from OAuth redirect (implicit flow)
-  const hash = window.location.hash;
-  if (hash) {
-    const params = new URLSearchParams(hash.slice(1));
-    const token  = params.get('access_token');
-    if (token) {
-      accessToken = token;
-      localStorage.setItem(LS_TOKEN, token);
-      // Clean URL
-      history.replaceState(null, '', window.location.pathname);
-    }
+  // Check URL param (e.g. opened as OBS source with ?token=XXX)
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlToken = urlParams.get('token');
+  if (urlToken) {
+    widgetToken = urlToken;
+    localStorage.setItem(LS_TOKEN, widgetToken);
+  } else {
+    widgetToken = localStorage.getItem(LS_TOKEN);
   }
 
-  if (!clientId) {
-    show('setup-screen');
-  } else if (!accessToken) {
-    show('auth-screen');
-  } else {
+  if (widgetToken) {
     showApp();
   }
 })();
 
-// ── Screen helpers ────────────────────────────────────
-function show(id) {
-  ['setup-screen','auth-screen','app-screen'].forEach(s => {
-    const el = document.getElementById(s);
-    if (el) el.style.display = (s === id ? (id === 'app-screen' ? 'block' : 'block') : 'none');
-  });
-}
-
 function showApp() {
   document.getElementById('setup-screen').style.display = 'none';
-  document.getElementById('auth-screen').style.display  = 'none';
-  document.getElementById('app-screen').style.display   = 'block';
-  loadUser();
-  connectSocket();
+  document.getElementById('app-screen').style.display = 'block';
+  fetchUserData();
 }
 
-// ── Client ID setup ───────────────────────────────────
-function saveClientId() {
-  const val = document.getElementById('client-id-input').value.trim();
-  if (!val) { alert('Введи Client ID'); return; }
-  clientId = val;
-  localStorage.setItem(LS_CLIENT, val);
-  show('auth-screen');
-}
-
-function resetClientId() {
-  localStorage.removeItem(LS_CLIENT);
-  localStorage.removeItem(LS_TOKEN);
-  clientId = null; accessToken = null;
-  show('setup-screen');
-}
-
-// ── OAuth (Implicit Flow) ─────────────────────────────
-function startAuth() {
-  const redirectUri = window.location.origin + window.location.pathname;
-  const scope = 'oauth-donation-index oauth-user-show';
-  const url = `https://www.donationalerts.com/oauth/authorize`
-    + `?client_id=${encodeURIComponent(clientId)}`
-    + `&redirect_uri=${encodeURIComponent(redirectUri)}`
-    + `&response_type=token`
-    + `&scope=${encodeURIComponent(scope)}`;
-  window.location.href = url;
+function saveToken() {
+  const val = document.getElementById('token-input').value.trim();
+  if (!val) { alert('Введи Widget Token'); return; }
+  widgetToken = val;
+  localStorage.setItem(LS_TOKEN, val);
+  showApp();
 }
 
 function logout() {
   localStorage.removeItem(LS_TOKEN);
-  localStorage.removeItem(LS_USER);
-  accessToken = null;
+  widgetToken = null;
   if (ws) { ws.close(); ws = null; }
-  show('auth-screen');
+  document.getElementById('setup-screen').style.display = 'block';
+  document.getElementById('app-screen').style.display = 'none';
 }
 
-// ── User info ─────────────────────────────────────────
-function loadUser() {
+// ── Fetch user data via widget API ────────────────────
+async function fetchUserData() {
+  setStatus('connecting', 'Получение данных...');
   try {
-    // Decode JWT payload (base64url)
-    const parts = accessToken.split('.');
-    if (parts.length < 2) throw new Error('bad token');
-    const payload = JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
-    daUserId = payload.sub || payload.user_id || payload.id || null;
-    const name = payload.name || payload.username || ('ID: ' + daUserId) || '—';
-    document.getElementById('user-name').textContent = name;
-    localStorage.setItem(LS_USER, JSON.stringify({ id: daUserId, name }));
-  } catch(e) {
-    // Fallback: try cached
-    const cached = localStorage.getItem(LS_USER);
-    if (cached) {
-      const u = JSON.parse(cached);
-      daUserId = u.id;
-      document.getElementById('user-name').textContent = u.name;
+    const r = await fetch(`https://www.donationalerts.com/api/v1/user/oauth?token=${widgetToken}`);
+    const d = await r.json();
+    if (d.data) {
+      userId = d.data.id;
+      socketToken = d.data.socket_connection_token;
+      connectSocket();
     } else {
-      document.getElementById('user-name').textContent = 'Подключён';
+      // Try widget crawl approach
+      connectSocketDirect();
     }
+  } catch(e) {
+    connectSocketDirect();
   }
 }
 
-// ── Centrifugo WebSocket ──────────────────────────────
+// ── Connect via socket_connection_token ───────────────
 function connectSocket() {
-  setStatus('connecting', 'Подключение...');
-  openWS();
+  openWS(socketToken);
 }
 
-function openWS() {
-  try { if (ws) ws.close(); } catch(e) {}
+// ── Fallback: connect with widget token directly ──────
+function connectSocketDirect() {
+  openWS(widgetToken);
+}
 
-  ws = new WebSocket('wss://centrifugo.donationalerts.com/connection/websocket');
+function openWS(token) {
+  try { if (ws) ws.close(); } catch(e) {}
+  setStatus('connecting', 'Подключение к сокету...');
+
+  ws = new WebSocket('wss://socket2.donationalerts.com/socket');
 
   ws.onopen = () => {
-    console.log('[WS] open, sending connect');
-    ws.send(JSON.stringify({
-      params: { token: accessToken },
-      id: 1
-    }));
+    console.log('[WS] open');
+    ws.send(JSON.stringify({ type: 1, key: token }));
   };
 
   ws.onmessage = (e) => {
     try {
       const msg = JSON.parse(e.data);
-      console.log('[WS] message:', JSON.stringify(msg).slice(0, 200));
+      console.log('[WS] msg:', JSON.stringify(msg).slice(0, 300));
 
-      // Connected - subscribe to donations channel
-      if (msg.id === 1 && msg.result !== undefined) {
+      // Successful auth
+      if (msg.type === 3) {
         setStatus('connected', 'Подключено · ждём донатов');
-        ws.send(JSON.stringify({
-          method: 1,
-          params: { channel: `$alerts:donation_${daUserId}` },
-          id: 2
-        }));
+        return;
       }
 
-      // Publication (donation event)
-      const pub = msg.result?.data?.data
-                || msg.push?.pub?.data
-                || msg.result?.data;
-      if (pub && pub.amount !== undefined) {
-        handleDonation(pub);
+      // Donation event
+      if (msg.type === 1 && msg.data) {
+        handleDonation(msg.data);
       }
-    } catch(err) { console.log('[WS] parse error', err); }
+    } catch(err) { console.log('[WS] err', err); }
   };
 
   ws.onerror = (e) => {
@@ -521,8 +338,8 @@ function openWS() {
 
   ws.onclose = (e) => {
     console.log('[WS] closed', e.code, e.reason);
-    setStatus('idle', 'Соединение закрыто · переподключение...');
-    setTimeout(() => { if (accessToken) openWS(); }, 5000);
+    setStatus('idle', 'Переподключение...');
+    setTimeout(() => { if (widgetToken) openWS(token); }, 5000);
   };
 }
 
