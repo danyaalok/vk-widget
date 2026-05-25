@@ -154,7 +154,8 @@
             </div>
           </div>
           <div class="btn-row">
-            <button class="danger" onclick="skipCurrent()">⏭ Пропустить</button>
+            <button id="start-btn" onclick="startCurrent()" style="margin-top:0;background:#4ade80;color:#000;">▶ Запустить</button>
+            <button class="danger" onclick="skipCurrent()" style="margin-top:0;">⏭ Пропустить</button>
             <button class="secondary" onclick="clearAll()" style="margin-top:0;">🗑 Очистить всё</button>
           </div>
         </div>
@@ -208,6 +209,7 @@ let timerInterval = null;
 let timeLeft      = 0;
 let panelOpen     = false;
 let lastVideoId   = null;
+let isStarted     = false; // video only plays after streamer clicks Start
 
 const isControlMode = new URLSearchParams(window.location.search).has('control');
 
@@ -272,7 +274,7 @@ async function saveState() {
     await fetch(STATE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ current: currentItem, queue })
+      body: JSON.stringify({ current: isStarted ? currentItem : null, queue })
     });
   } catch(e) {}
 }
@@ -385,14 +387,38 @@ function parseVkVideo(text) {
   return null;
 }
 
-function enqueue(item) { queue.push(item); saveState(); renderQueue(); if (!isPlaying) playNext(); }
-
-function playNext() {
-  if (!queue.length) { isPlaying = false; currentItem = null; saveState(); stopPlayer(); return; }
-  isPlaying = true; currentItem = queue.shift(); saveState(); renderQueue(); startPlayer(currentItem);
+function enqueue(item) {
+  queue.push(item);
+  saveState();
+  renderQueue();
+  // Only auto-advance if already started and nothing playing
+  if (!isPlaying && isStarted) playNext();
+  // If nothing playing yet, just show in queue waiting for Start
 }
 
-function skipCurrent() { clearInterval(timerInterval); playNext(); }
+function playNext() {
+  isStarted = false;
+  if (!queue.length) { isPlaying = false; currentItem = null; saveState(); stopPlayer(); return; }
+  isPlaying = true;
+  currentItem = queue.shift();
+  saveState();
+  renderQueue();
+  startPlayer(currentItem);
+}
+
+function skipCurrent() { clearInterval(timerInterval); isStarted = false; playNext(); }
+
+function startCurrent() {
+  isStarted = true;
+  document.getElementById('start-btn').style.display = 'none';
+  // Trigger actual video playback
+  if (currentItem) {
+    saveState();
+    // Update mini player
+    const miniIframe = document.getElementById('mini-iframe');
+    if (miniIframe) miniIframe.src = `https://vk.com/video_ext.php?oid=${currentItem.oid}&id=${currentItem.id}&hd=2&autoplay=1`;
+  }
+}
 
 function clearAll() {
   queue = []; clearTimeout(playTimer); clearInterval(timerInterval);
@@ -406,14 +432,14 @@ function startPlayer(item) {
     document.getElementById('np-amount').textContent = item.amount + ' ' + item.currency;
     document.getElementById('np-donor').textContent  = item.donor;
     document.getElementById('np-msg').textContent    = item.message;
-    document.getElementById('np-timer').textContent  = '';
-    // Show mini player
-    const miniCard = document.getElementById('mini-player-card');
-    const miniIframe = document.getElementById('mini-iframe');
-    miniCard.style.display = 'block';
-    miniIframe.src = `https://vk.com/video_ext.php?oid=${item.oid}&id=${item.id}&hd=2&autoplay=1`;
+    document.getElementById('np-timer').textContent  = '⏸ Нажми ▶ чтобы запустить';
+    // Show Start button
+    document.getElementById('start-btn').style.display = 'block';
+    // Show mini player card but without video yet
+    document.getElementById('mini-player-card').style.display = 'block';
+    document.getElementById('mini-iframe').src = '';
   }
-  // No auto-skip — streamer skips manually
+  // Video won't play until streamer clicks Start
 }
 
 function stopPlayer() {
