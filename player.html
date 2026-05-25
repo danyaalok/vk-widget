@@ -391,9 +391,8 @@ function enqueue(item) {
   queue.push(item);
   saveState();
   renderQueue();
-  // Only auto-advance if already started and nothing playing
-  if (!isPlaying && isStarted) playNext();
-  // If nothing playing yet, just show in queue waiting for Start
+  // Always advance to "now playing" state, but don't start video until streamer clicks Start
+  if (!isPlaying) playNext();
 }
 
 function playNext() {
