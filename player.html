@@ -368,7 +368,8 @@ function connectSocket(socketToken) {
           if (isControlMode) setStatus('connected', 'Подключено · ждём донатов');
         }
       }
-      const pub = msg.push?.pub?.data;
+      const pub = msg.push?.pub?.data
+                || msg.result?.data?.data;
       if (pub && pub.amount !== undefined) handleDonation(pub);
     } catch(err) {}
   };
