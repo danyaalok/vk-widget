@@ -218,7 +218,13 @@ const isControlMode = new URLSearchParams(window.location.search).has('control')
   if (hash) {
     const p = new URLSearchParams(hash.slice(1));
     const t = p.get('access_token');
-    if (t) { accessToken = t; localStorage.setItem(LS_TOKEN, t); history.replaceState(null,'',window.location.pathname+(isControlMode?'?control':'')); }
+    if (t) {
+      accessToken = t;
+      localStorage.setItem(LS_TOKEN, t);
+      // After OAuth redirect, go to control panel
+      window.location.href = window.location.origin + '/player.html?control';
+      return;
+    }
   }
   if (!accessToken) accessToken = localStorage.getItem(LS_TOKEN);
 
