@@ -8,129 +8,79 @@
   @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
 
   :root {
-    --bg: #0a0a0f;
-    --accent: #07c3f2;
-    --accent2: #ff4d6a;
-    --text: #e8eaf0;
-    --muted: #555a70;
-    --card: rgba(255,255,255,0.04);
-    --border: rgba(7,195,242,0.18);
+    --bg: #0a0a0f; --accent: #07c3f2; --accent2: #ff4d6a;
+    --text: #e8eaf0; --muted: #555a70; --card: rgba(255,255,255,0.04); --border: rgba(7,195,242,0.18);
   }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 20px 60px;position:relative;overflow-x:hidden; }
+  body::before { content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(7,195,242,0.07) 0%,transparent 70%);pointer-events:none; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  .header { text-align:center;margin-bottom:36px;position:relative;z-index:1; }
+  .header h1 { font-family:'Unbounded',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;background:linear-gradient(135deg,var(--accent) 0%,#b3eaff 60%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1; }
+  .header p { margin-top:8px;color:var(--muted);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase; }
+  .badge { display:inline-block;margin-top:12px;padding:3px 12px;border:1px solid var(--border);border-radius:99px;font-size:.7rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 32px 20px 60px;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    top: -200px; left: 50%;
-    transform: translateX(-50%);
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(7,195,242,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .header { text-align: center; margin-bottom: 36px; position: relative; z-index: 1; }
-  .header h1 {
-    font-family: 'Unbounded', sans-serif;
-    font-size: clamp(1.4rem, 4vw, 2.2rem);
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--accent) 0%, #b3eaff 60%, var(--accent2) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    line-height: 1.1;
-  }
-  .header p { margin-top: 8px; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; }
-  .badge { display: inline-block; margin-top: 12px; padding: 3px 12px; border: 1px solid var(--border); border-radius: 99px; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
-
-  .container { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
-
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; backdrop-filter: blur(8px); }
-
-  .card-title {
-    font-family: 'Unbounded', sans-serif; font-size: 0.72rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
-    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
-  }
-  .dot-blink { width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite;flex-shrink:0;display:inline-block; }
+  .container { width:100%;max-width:720px;display:flex;flex-direction:column;gap:20px;position:relative;z-index:1; }
+  .card { background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;backdrop-filter:blur(8px); }
+  .card-title { font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px; }
+  .dot-blink { width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite;flex-shrink:0; }
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
   label { display:block;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;margin-top:14px; }
-  label:first-of-type { margin-top: 0; }
+  label:first-of-type { margin-top:0; }
+  input { width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;outline:none;transition:border-color .2s,box-shadow .2s; }
+  input:focus { border-color:var(--accent);box-shadow:0 0 0 3px rgba(7,195,242,.1); }
+  input::placeholder { color:var(--muted); }
+  .row { display:flex;gap:12px; } .row>* { flex:1; }
 
-  input {
-    width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-    border-radius:8px;padding:10px 14px;color:var(--text);font-family:'JetBrains Mono',monospace;
-    font-size:.82rem;outline:none;transition:border-color .2s,box-shadow .2s;
-  }
-  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(7,195,242,.1);}
-  input::placeholder{color:var(--muted);}
+  button { background:var(--accent);color:#000;border:none;border-radius:8px;padding:11px 20px;font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .15s,transform .1s,box-shadow .15s;width:100%;margin-top:14px; }
+  button:hover { background:#29d6ff;box-shadow:0 0 20px rgba(7,195,242,.4);transform:translateY(-1px); }
+  button:active { transform:translateY(0); }
+  button.danger { background:var(--accent2);color:#fff; }
+  button.danger:hover { background:#ff6b83;box-shadow:0 0 20px rgba(255,77,106,.4); }
+  button.secondary { background:transparent;border:1px solid var(--border);color:var(--accent);margin-top:8px; }
+  button.secondary:hover { background:rgba(7,195,242,.08);box-shadow:none; }
 
-  .row{display:flex;gap:12px;} .row>*{flex:1;}
+  .status-bar { display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(0,0,0,.3);border-radius:8px;font-size:.76rem;color:var(--muted);margin-top:12px;border:1px solid rgba(255,255,255,.06); }
+  .dot { width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s,box-shadow .3s; }
+  .dot.connected { background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.6);animation:pulse 2s ease-in-out infinite; }
+  .dot.error { background:var(--accent2);box-shadow:0 0 8px rgba(255,77,106,.6); }
 
-  button {
-    background:var(--accent);color:#000;border:none;border-radius:8px;padding:11px 20px;
-    font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;
-    text-transform:uppercase;cursor:pointer;transition:background .15s,transform .1s,box-shadow .15s;
-    width:100%;margin-top:14px;
-  }
-  button:hover{background:#29d6ff;box-shadow:0 0 20px rgba(7,195,242,.4);transform:translateY(-1px);}
-  button:active{transform:translateY(0);}
-  button.danger{background:var(--accent2);color:#fff;}
-  button.danger:hover{background:#ff6b83;box-shadow:0 0 20px rgba(255,77,106,.4);}
-  button.secondary{background:transparent;border:1px solid var(--border);color:var(--accent);margin-top:8px;}
-  button.secondary:hover{background:rgba(7,195,242,.08);box-shadow:none;}
+  #app-screen { display:none; }
+  #player-section { display:none; }
+  .player-overlay { position:relative;background:#000;border-radius:10px;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--border); }
+  .player-overlay iframe { width:100%;height:100%;display:block;border:none; }
+  .player-meta { margin-top:12px;display:flex;align-items:flex-start;gap:12px; }
+  .donation-badge { flex-shrink:0;background:linear-gradient(135deg,var(--accent2),#ff8a9b);border-radius:8px;padding:6px 12px;font-family:'Unbounded',sans-serif;font-size:.85rem;font-weight:700;color:#fff;white-space:nowrap; }
+  .donation-info { flex:1;min-width:0; }
+  .donation-name { font-family:'Unbounded',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .donation-msg { font-size:.75rem;color:var(--muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical; }
 
-  .status-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(0,0,0,.3);border-radius:8px;font-size:.76rem;color:var(--muted);margin-top:12px;border:1px solid rgba(255,255,255,.06);}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s,box-shadow .3s;}
-  .dot.connected{background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.6);animation:pulse 2s ease-in-out infinite;}
-  .dot.error{background:var(--accent2);box-shadow:0 0 8px rgba(255,77,106,.6);}
-
-  #setup-screen{}
-  #app-screen{display:none;}
-
-  #player-section{display:none;}
-  .player-overlay{position:relative;background:#000;border-radius:10px;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--border);}
-  .player-overlay iframe{width:100%;height:100%;display:block;border:none;}
-  .player-meta{margin-top:12px;display:flex;align-items:flex-start;gap:12px;}
-  .donation-badge{flex-shrink:0;background:linear-gradient(135deg,var(--accent2),#ff8a9b);border-radius:8px;padding:6px 12px;font-family:'Unbounded',sans-serif;font-size:.85rem;font-weight:700;color:#fff;white-space:nowrap;}
-  .donation-info{flex:1;min-width:0;}
-  .donation-name{font-family:'Unbounded',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .donation-msg{font-size:.75rem;color:var(--muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
-
-  .queue-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px;}
+  .queue-list { display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px; }
   .queue-list::-webkit-scrollbar{width:4px} .queue-list::-webkit-scrollbar-track{background:transparent} .queue-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-  .queue-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.75rem;animation:slideIn .25s ease;}
-  .queue-item.active{border-color:var(--accent);background:rgba(7,195,242,.05);}
+  .queue-item { display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.75rem;animation:slideIn .25s ease; }
+  .queue-item.active { border-color:var(--accent);background:rgba(7,195,242,.05); }
   @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-  .queue-num{font-family:'Unbounded',sans-serif;font-size:.65rem;color:var(--muted);width:18px;text-align:center;flex-shrink:0;}
-  .queue-info{flex:1;min-width:0;}
-  .queue-donor{color:var(--accent);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .queue-amount{color:var(--accent2);font-size:.7rem;margin-left:auto;flex-shrink:0;}
-  .empty-state{text-align:center;padding:28px;color:var(--muted);font-size:.75rem;}
+  .queue-num { font-family:'Unbounded',sans-serif;font-size:.65rem;color:var(--muted);width:18px;text-align:center;flex-shrink:0; }
+  .queue-info { flex:1;min-width:0; }
+  .queue-donor { color:var(--accent);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .queue-amount { color:var(--accent2);font-size:.7rem;margin-left:auto;flex-shrink:0; }
+  .empty-state { text-align:center;padding:28px;color:var(--muted);font-size:.75rem; }
 
-  .tip-box{background:rgba(7,195,242,.05);border:1px solid rgba(7,195,242,.15);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.7;}
-  .tip-box strong{color:var(--accent);}
-  .tip-box code{background:rgba(7,195,242,.1);padding:1px 6px;border-radius:4px;color:var(--text);font-size:.72rem;}
+  .tip-box { background:rgba(7,195,242,.05);border:1px solid rgba(7,195,242,.15);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.7; }
+  .tip-box strong { color:var(--accent); }
+  .tip-box code { background:rgba(7,195,242,.1);padding:1px 6px;border-radius:4px;color:var(--text);font-size:.72rem; }
 
-  .test-inputs{display:flex;gap:10px;}
-  .test-inputs input{flex:1;}
-  .test-inputs button{width:auto;margin-top:0;flex-shrink:0;padding:10px 16px;}
+  .how-to { background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.8;margin-top:12px; }
+  .how-to strong { color:var(--text); }
 
-  .how-to{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 16px;font-size:.74rem;color:var(--muted);line-height:1.8;margin-top:12px;}
-  .how-to strong{color:var(--text);}
-  .how-to a{color:var(--accent);text-decoration:none;}
+  .test-inputs { display:flex;gap:10px; }
+  .test-inputs input { flex:1; }
+  .test-inputs button { width:auto;margin-top:0;flex-shrink:0;padding:10px 16px; }
+
+  .user-info { display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2);border-radius:8px;margin-bottom:14px; }
+  .user-name { font-family:'Unbounded',sans-serif;font-size:.8rem;color:#4ade80; }
+  .user-sub { font-size:.7rem;color:var(--muted);margin-top:2px; }
 </style>
 </head>
 <body>
@@ -146,23 +96,29 @@
   <!-- Setup -->
   <div class="card" id="setup-screen">
     <div class="card-title"><span class="dot-blink"></span>Настройка</div>
-    <label>Widget Token из Donation Alerts</label>
-    <input type="text" id="token-input" placeholder="Вставь сюда свой Widget Token...">
-
+    <label>Access Token из Donation Alerts</label>
+    <input type="password" id="token-input" placeholder="Вставь Access Token...">
     <div class="how-to">
-      <strong>Где найти Widget Token:</strong><br>
-      DA → Виджеты → любой виджет (например Оповещения) → Копировать ссылку<br>
-      В ссылке найди параметр <code>?token=XXXXX</code> — это и есть твой токен
+      <strong>Как получить Access Token:</strong><br>
+      1. Нажми кнопку ниже — откроется страница авторизации DA<br>
+      2. Войди в аккаунт<br>
+      3. Скопируй токен из адресной строки (часть после <code>access_token=</code>)<br>
+      4. Вставь сюда
     </div>
-
-    <button onclick="saveToken()">▶ Подключиться</button>
+    <button onclick="openAuth()">🔑 Открыть авторизацию DA</button>
+    <button class="secondary" onclick="saveToken()" style="margin-top:8px;">▶ Подключиться с токеном</button>
   </div>
 
   <!-- App -->
   <div id="app-screen">
-
     <div class="card">
       <div class="card-title"><span class="dot-blink"></span>Подключение</div>
+      <div class="user-info">
+        <div>
+          <div class="user-name" id="user-name">—</div>
+          <div class="user-sub">Donation Alerts подключён ✓</div>
+        </div>
+      </div>
       <div class="row">
         <div>
           <label>Мин. сумма (руб)</label>
@@ -180,7 +136,6 @@
       <button class="secondary" onclick="logout()">Сменить токен</button>
     </div>
 
-    <!-- Now Playing -->
     <div class="card" id="player-section" style="margin-top:20px;">
       <div class="card-title"><span class="dot-blink"></span>Сейчас играет</div>
       <div class="player-overlay">
@@ -190,7 +145,6 @@
       <button class="danger" onclick="skipCurrent()" style="margin-top:14px;">⏭ Пропустить</button>
     </div>
 
-    <!-- Queue -->
     <div class="card" style="margin-top:20px;">
       <div class="card-title"><span class="dot-blink"></span>Очередь клипов</div>
       <div class="queue-list" id="queue-list">
@@ -198,7 +152,6 @@
       </div>
     </div>
 
-    <!-- Test -->
     <div class="card" style="margin-top:20px;">
       <div class="card-title"><span class="dot-blink"></span>Тест</div>
       <label>Ссылка VK Видео</label>
@@ -208,13 +161,12 @@
       </div>
       <label>Симуляция доната</label>
       <div class="test-inputs">
-        <input type="text" id="test-donor" value="TestUser" placeholder="Имя">
+        <input type="text" id="test-donor" value="TestUser">
         <input type="number" id="test-amount" value="200" style="max-width:90px;">
         <button onclick="simulateDonation()">+ Донат</button>
       </div>
     </div>
-
-  </div><!-- /app-screen -->
+  </div>
 
   <div class="tip-box">
     <strong>Как заказать клип:</strong> в сообщении доната вставь ссылку на VK Видео<br>
@@ -224,122 +176,135 @@
 </div>
 
 <script>
-const LS_TOKEN = 'da_widget_token';
+// PROXY_URL будет заменён на реальный адрес после деплоя
+const PROXY_URL = '/api/proxy';
+const CLIENT_ID = '19121';
+const LS_TOKEN  = 'da_access_token';
 
-let widgetToken = null;
-let ws = null;
-let queue = [];
-let isPlaying = false;
-let playTimer = null;
-let socketToken = null;
-let userId = null;
+let accessToken = null;
+let ws          = null;
+let daUserId    = null;
+let queue       = [];
+let isPlaying   = false;
+let playTimer   = null;
 
 // ── Boot ──────────────────────────────────────────────
 (function init() {
-  // Check URL param (e.g. opened as OBS source with ?token=XXX)
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlToken = urlParams.get('token');
-  if (urlToken) {
-    widgetToken = urlToken;
-    localStorage.setItem(LS_TOKEN, widgetToken);
-  } else {
-    widgetToken = localStorage.getItem(LS_TOKEN);
+  // Catch implicit flow token from URL hash
+  const hash = window.location.hash;
+  if (hash) {
+    const p = new URLSearchParams(hash.slice(1));
+    const t = p.get('access_token');
+    if (t) {
+      accessToken = t;
+      localStorage.setItem(LS_TOKEN, t);
+      history.replaceState(null, '', window.location.pathname);
+    }
   }
+  if (!accessToken) accessToken = localStorage.getItem(LS_TOKEN);
 
-  if (widgetToken) {
-    showApp();
-  }
+  if (accessToken) showApp();
 })();
 
-function showApp() {
-  document.getElementById('setup-screen').style.display = 'none';
-  document.getElementById('app-screen').style.display = 'block';
-  fetchUserData();
+function openAuth() {
+  const redirect = window.location.origin + window.location.pathname;
+  const scope    = 'oauth-donation-index oauth-user-show';
+  const url = `https://www.donationalerts.com/oauth/authorize`
+    + `?client_id=${CLIENT_ID}`
+    + `&redirect_uri=${encodeURIComponent(redirect)}`
+    + `&response_type=token`
+    + `&scope=${encodeURIComponent(scope)}`;
+  window.location.href = url;
 }
 
 function saveToken() {
   const val = document.getElementById('token-input').value.trim();
-  if (!val) { alert('Введи Widget Token'); return; }
-  widgetToken = val;
+  if (!val) { alert('Введи токен'); return; }
+  accessToken = val;
   localStorage.setItem(LS_TOKEN, val);
   showApp();
 }
 
-function logout() {
-  localStorage.removeItem(LS_TOKEN);
-  widgetToken = null;
-  if (ws) { ws.close(); ws = null; }
-  document.getElementById('setup-screen').style.display = 'block';
-  document.getElementById('app-screen').style.display = 'none';
+function showApp() {
+  document.getElementById('setup-screen').style.display  = 'none';
+  document.getElementById('app-screen').style.display    = 'block';
+  loadUser();
 }
 
-// ── Fetch user data via widget API ────────────────────
-async function fetchUserData() {
-  setStatus('connecting', 'Получение данных...');
+function logout() {
+  localStorage.removeItem(LS_TOKEN);
+  accessToken = null;
+  if (ws) { ws.close(); ws = null; }
+  document.getElementById('setup-screen').style.display = 'block';
+  document.getElementById('app-screen').style.display   = 'none';
+}
+
+// ── Load user via proxy ───────────────────────────────
+async function loadUser() {
+  setStatus('connecting', 'Получение данных пользователя...');
   try {
-    const r = await fetch(`https://www.donationalerts.com/api/v1/user/oauth?token=${widgetToken}`);
+    const r = await fetch(`${PROXY_URL}?token=${accessToken}&path=user/oauth`);
     const d = await r.json();
     if (d.data) {
-      userId = d.data.id;
-      socketToken = d.data.socket_connection_token;
-      connectSocket();
+      daUserId = d.data.id;
+      document.getElementById('user-name').textContent = d.data.name || d.data.username || 'ID: ' + daUserId;
+      const socketToken = d.data.socket_connection_token;
+      connectSocket(socketToken);
     } else {
-      // Try widget crawl approach
-      connectSocketDirect();
+      setStatus('error', 'Ошибка авторизации — попробуй войти снова');
     }
   } catch(e) {
-    connectSocketDirect();
+    setStatus('error', 'Ошибка: ' + e.message);
   }
 }
 
-// ── Connect via socket_connection_token ───────────────
-function connectSocket() {
-  openWS(socketToken);
-}
-
-// ── Fallback: connect with widget token directly ──────
-function connectSocketDirect() {
-  openWS(widgetToken);
-}
-
-function openWS(token) {
-  try { if (ws) ws.close(); } catch(e) {}
+// ── WebSocket ─────────────────────────────────────────
+function connectSocket(socketToken) {
   setStatus('connecting', 'Подключение к сокету...');
+  try { if (ws) ws.close(); } catch(e) {}
 
-  ws = new WebSocket('wss://socket2.donationalerts.com/socket');
+  ws = new WebSocket('wss://centrifugo.donationalerts.com/connection/websocket');
 
   ws.onopen = () => {
-    console.log('[WS] open');
-    ws.send(JSON.stringify({ type: 1, key: token }));
+    ws.send(JSON.stringify({ params: { token: socketToken }, id: 1 }));
   };
 
-  ws.onmessage = (e) => {
+  ws.onmessage = async (e) => {
     try {
       const msg = JSON.parse(e.data);
-      console.log('[WS] msg:', JSON.stringify(msg).slice(0, 300));
 
-      // Successful auth
-      if (msg.type === 3) {
-        setStatus('connected', 'Подключено · ждём донатов');
-        return;
+      // Connected — get subscription token and subscribe
+      if (msg.id === 1 && msg.result) {
+        const clientId = msg.result.client;
+        // Get channel subscription token via proxy
+        const r = await fetch(`${PROXY_URL}?token=${accessToken}&path=centrifuge/subscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ client: clientId, channels: [`$alerts:donation_${daUserId}`] })
+        });
+        const d = await r.json();
+        const ch = d.data?.channels?.[0];
+        if (ch) {
+          ws.send(JSON.stringify({
+            params: { channel: ch.channel, token: ch.token },
+            method: 1,
+            id: 2
+          }));
+          setStatus('connected', 'Подключено · ждём донатов');
+        }
       }
 
       // Donation event
-      if (msg.type === 1 && msg.data) {
-        handleDonation(msg.data);
-      }
+      const pub = msg.push?.pub?.data;
+      if (pub && pub.amount !== undefined) handleDonation(pub);
+
     } catch(err) { console.log('[WS] err', err); }
   };
 
-  ws.onerror = (e) => {
-    console.log('[WS] error', e);
-    setStatus('error', 'Ошибка соединения');
-  };
-
+  ws.onerror = () => setStatus('error', 'Ошибка соединения');
   ws.onclose = (e) => {
-    console.log('[WS] closed', e.code, e.reason);
     setStatus('idle', 'Переподключение...');
-    setTimeout(() => { if (widgetToken) openWS(token); }, 5000);
+    setTimeout(() => { if (accessToken) loadUser(); }, 5000);
   };
 }
 
@@ -349,15 +314,13 @@ function handleDonation(data) {
   const amount = parseFloat(data.amount) || 0;
   const msg    = data.message || '';
   const name   = data.username || data.name || 'Аноним';
-
   if (amount < min) return;
   const parsed = parseVkVideo(msg);
   if (!parsed) return;
-
   enqueue({ donor: name, amount, message: msg, currency: data.currency || '₽', ...parsed });
 }
 
-// ── VK URL parser ─────────────────────────────────────
+// ── VK parser ─────────────────────────────────────────
 function parseVkVideo(text) {
   const pats = [
     /vk\.com\/video(-?\d+)_(\d+)/i,
@@ -371,28 +334,16 @@ function parseVkVideo(text) {
   }
   return null;
 }
+function buildEmbed(oid, id) { return `https://vk.com/video_ext.php?oid=${oid}&id=${id}&hd=2&autoplay=1`; }
 
-function buildEmbed(oid, id) {
-  return `https://vk.com/video_ext.php?oid=${oid}&id=${id}&hd=2&autoplay=1`;
-}
-
-// ── Queue & Player ────────────────────────────────────
-function enqueue(item) {
-  queue.push(item);
-  renderQueue();
-  if (!isPlaying) playNext();
-}
-
+// ── Queue & player ────────────────────────────────────
+function enqueue(item) { queue.push(item); renderQueue(); if (!isPlaying) playNext(); }
 function playNext() {
   if (!queue.length) { isPlaying = false; stopPlayer(); return; }
   isPlaying = true;
-  const item = queue.shift();
-  renderQueue();
-  startPlayer(item);
+  const item = queue.shift(); renderQueue(); startPlayer(item);
 }
-
 function skipCurrent() { clearTimeout(playTimer); playNext(); }
-
 function startPlayer(item) {
   const dur = (parseInt(document.getElementById('clip-duration').value) || 60) * 1000;
   document.getElementById('vk-iframe').src = buildEmbed(item.oid, item.id);
@@ -405,12 +356,10 @@ function startPlayer(item) {
     </div>`;
   playTimer = setTimeout(playNext, dur);
 }
-
 function stopPlayer() {
   document.getElementById('vk-iframe').src = '';
   document.getElementById('player-section').style.display = 'none';
 }
-
 function renderQueue() {
   const el = document.getElementById('queue-list');
   if (!queue.length) { el.innerHTML = '<div class="empty-state">Очередь пуста</div>'; return; }
@@ -425,7 +374,7 @@ function renderQueue() {
     </div>`).join('');
 }
 
-// ── Status ────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────
 function setStatus(s, text) {
   const dot = document.getElementById('status-dot');
   dot.className = 'dot';
@@ -433,8 +382,6 @@ function setStatus(s, text) {
   if (s === 'error')     dot.classList.add('error');
   document.getElementById('status-text').textContent = text;
 }
-
-// ── Test ──────────────────────────────────────────────
 function testVideo() {
   const u = document.getElementById('test-url').value.trim();
   if (!u) return;
@@ -442,21 +389,12 @@ function testVideo() {
   if (!p) { alert('Не удалось распознать VK-ссылку'); return; }
   enqueue({ donor: 'Тест', amount: 999, message: u, currency: '₽', ...p });
 }
-
 function simulateDonation() {
   const u = document.getElementById('test-url').value.trim();
   if (!u) { alert('Введи VK-ссылку выше'); return; }
-  handleDonation({
-    username: document.getElementById('test-donor').value || 'TestUser',
-    amount: parseFloat(document.getElementById('test-amount').value) || 200,
-    message: u,
-    currency: '₽'
-  });
+  handleDonation({ username: document.getElementById('test-donor').value || 'TestUser', amount: parseFloat(document.getElementById('test-amount').value) || 200, message: u, currency: '₽' });
 }
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 </script>
 </body>
 </html>
