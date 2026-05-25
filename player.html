@@ -382,7 +382,13 @@ function handleDonation(data) {
 }
 
 function parseVkVideo(text) {
-  const pats = [/vk\.com\/video(-?\d+)_(\d+)/i,/vk\.com\/clip(-?\d+)_(\d+)/i,/[?&]z=video(-?\d+)_(\d+)/i,/video(-?\d+)_(\d+)/i];
+  const pats = [
+    /vkvideo\.ru\/video(-?\d+)_(\d+)/i,
+    /vk\.com\/video(-?\d+)_(\d+)/i,
+    /vk\.com\/clip(-?\d+)_(\d+)/i,
+    /[?&]z=video(-?\d+)_(\d+)/i,
+    /video(-?\d+)_(\d+)/i,
+  ];
   for (const re of pats) { const m = text.match(re); if (m) return { oid: m[1], id: m[2] }; }
   return null;
 }
