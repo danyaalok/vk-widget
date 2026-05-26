@@ -182,11 +182,11 @@
         </div>
       </div>
 
-    </div>
+      <div class="tip-box" style="margin-top:4px;">
+        <strong>Как заказать клип:</strong> в сообщении доната вставь ссылку на VK Видео<br>
+        <code>vk.com/video-12345_67890</code> &nbsp; <code>vk.com/clip-12345_67890</code>
+      </div>
 
-    <div class="tip-box">
-      <strong>Как заказать клип:</strong> в сообщении доната вставь ссылку на VK Видео<br>
-      <code>vk.com/video-12345_67890</code> &nbsp; <code>vk.com/clip-12345_67890</code>
     </div>
 
   </div>
@@ -234,7 +234,10 @@ const isControlMode = new URLSearchParams(window.location.search).has('control')
   if (!accessToken) accessToken = localStorage.getItem(LS_TOKEN);
 
   if (isControlMode) {
-    document.getElementById('toggle-btn').classList.add('visible');
+    // Only show toggle button after login
+    if (accessToken) {
+      document.getElementById('toggle-btn').classList.add('visible');
+    }
     togglePanel();
     if (accessToken) showApp();
     updateObsUrl();
@@ -312,6 +315,7 @@ function openAuth() {
 function showApp() {
   document.getElementById('setup-in-control').style.display = 'none';
   document.getElementById('app-in-control').style.display   = 'block';
+  document.getElementById('toggle-btn').classList.add('visible');
   // Restore saved min amount
   const saved = localStorage.getItem('min_amount');
   if (saved) document.getElementById('min-amount').value = saved;
