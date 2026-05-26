@@ -2,7 +2,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script>window.location.replace('/player.html?control');</script>
+<script>
+  // Replace current URL with player.html?control without losing the parameter
+  history.replaceState(null, '', '/player.html?control');
+  // Then load the actual page content
+  fetch('/player.html').then(r => r.text()).then(html => {
+    document.open();
+    document.write(html);
+    document.close();
+  });
+</script>
 </head>
 <body></body>
 </html>
