@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VK Video Widget</title>
+<title>Alok VK Widget</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
   :root{--bg:#0a0a0f;--accent:#07c3f2;--accent2:#ff4d6a;--text:#e8eaf0;--muted:#555a70;--card:rgba(255,255,255,0.04);--border:rgba(7,195,242,0.18);}
@@ -105,7 +105,7 @@
 
 <div id="control">
   <div class="header">
-    <h1>VK Widget</h1>
+    <h1>Alok VK Widget</h1>
     <p>Панель управления стримера</p>
   </div>
   <div class="container">
@@ -236,7 +236,7 @@ const isControlMode = new URLSearchParams(window.location.search).has('control')
   if (isControlMode) {
     // Only show toggle button after login
     if (accessToken) {
-      document.getElementById('toggle-btn').classList.add('visible');
+      // toggle button hidden — mini player is used instead
     }
     togglePanel();
     if (accessToken) showApp();
@@ -315,7 +315,7 @@ function openAuth() {
 function showApp() {
   document.getElementById('setup-in-control').style.display = 'none';
   document.getElementById('app-in-control').style.display   = 'block';
-  document.getElementById('toggle-btn').classList.add('visible');
+  // toggle button hidden — mini player is used instead
   // Restore saved min amount
   const saved = localStorage.getItem('min_amount');
   if (saved) document.getElementById('min-amount').value = saved;
