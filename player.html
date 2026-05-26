@@ -121,8 +121,16 @@
       <div class="card">
         <div class="card-title"><span class="dot-blink"></span>Статус</div>
         <div class="user-info"><div><div class="user-name" id="user-name">—</div><div class="user-sub">Donation Alerts подключён ✓</div></div></div>
-        <label>Мин. сумма (руб)</label>
-        <input type="number" id="min-amount" value="100" min="0">
+        <div class="row">
+          <div>
+            <label>Мин. сумма (руб)</label>
+            <input type="number" id="min-amount" value="100" min="0">
+          </div>
+          <div>
+            <label>Макс. длительность (сек)</label>
+            <input type="number" id="clip-duration" value="120" min="10" max="600">
+          </div>
+        </div>
         <div class="status-bar"><div class="dot" id="status-dot"></div><span id="status-text">Подключение...</span></div>
         <button class="secondary" onclick="logout()">Сменить аккаунт</button>
       </div>
@@ -322,6 +330,11 @@ function showApp() {
   document.getElementById('min-amount').addEventListener('input', (e) => {
     localStorage.setItem('min_amount', e.target.value);
   });
+  const savedDur = localStorage.getItem('clip_duration');
+  if (savedDur) document.getElementById('clip-duration').value = savedDur;
+  document.getElementById('clip-duration').addEventListener('input', (e) => {
+    localStorage.setItem('clip_duration', e.target.value);
+  });
 }
 
 function logout() {
@@ -427,12 +440,30 @@ function skipCurrent() { clearInterval(timerInterval); isStarted = false; playNe
 function startCurrent() {
   isStarted = true;
   document.getElementById('start-btn').style.display = 'none';
-  // Trigger actual video playback
   if (currentItem) {
     saveState();
-    // Update mini player
     const miniIframe = document.getElementById('mini-iframe');
     if (miniIframe) miniIframe.src = `https://vk.com/video_ext.php?oid=${currentItem.oid}&id=${currentItem.id}&hd=2&autoplay=1`;
+    // Start countdown timer
+    const dur = (parseInt(document.getElementById('clip-duration')?.value || 120)) * 1000;
+    timeLeft = Math.floor(dur / 1000);
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      const el = document.getElementById('np-timer');
+      if (el) el.textContent = `⏱ Осталось: ${timeLeft} сек`;
+      if (timeLeft <= 0) clearInterval(timerInterval);
+    }, 1000);
+    // Auto-stop after duration
+    clearTimeout(playTimer);
+    playTimer = setTimeout(() => {
+      // Clear video in OBS
+      currentItem = null;
+      isStarted = false;
+      saveState();
+      // Show next in queue
+      playNext();
+    }, dur);
   }
 }
 
@@ -449,13 +480,10 @@ function startPlayer(item) {
     document.getElementById('np-donor').textContent  = item.donor;
     document.getElementById('np-msg').textContent    = item.message;
     document.getElementById('np-timer').textContent  = '⏸ Нажми ▶ чтобы запустить';
-    // Show Start button
     document.getElementById('start-btn').style.display = 'block';
-    // Show mini player card but without video yet
     document.getElementById('mini-player-card').style.display = 'block';
     document.getElementById('mini-iframe').src = '';
   }
-  // Video won't play until streamer clicks Start
 }
 
 function stopPlayer() {
